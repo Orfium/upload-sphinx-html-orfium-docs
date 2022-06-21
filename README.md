@@ -10,3 +10,10 @@ This Github Action pushes your project documentation into Orfium's repository th
 4. The user name. Default value: "orfium-orf"
 
 ## Usage
+Add this to your CI with your values in the inputs:
+
+      - name: Upload with documentation action
+        uses: Orfium/upload-sphinx-html-orfium-docs@master
+        with:
+          deploy_key: ${{ secrets.DOCS_DEPLOY_KEY }}
+          docs_repo: Orfium/docs
