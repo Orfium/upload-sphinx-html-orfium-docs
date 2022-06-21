@@ -27,7 +27,7 @@ runs:
         fetch-depth: 0
         repository: ${{ inputs.docs_repo }}
         path: docs-repo
-        ssh-key: ${{ inputs.key }}
+        ssh-key: ${{ inputs.deploy_key }}
 
     - name: Copy and commit docs
       run: |
