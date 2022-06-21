@@ -15,9 +15,9 @@ inputs:
     default: "github-service-account@orfium.com"
 
   user_name:
-    description: "Default: orfium-orf"
+    description: "Default: orfium-org"
     required: false
-    default: "orfium-orf"
+    default: "orfium-org"
 runs:
   using: "composite"
   steps:
