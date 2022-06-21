@@ -1,0 +1,43 @@
+name: "Upload Shpinx HTML documentation to Orfium's docs repository"
+description: "This Github Action pushes your project documentation into Orfium's repository that centralize all projects documentation."
+inputs:
+  deploy_key:
+    description: "the deploy key"
+    required: true
+
+  docs_repo:
+    description: "The repository where to deploy the project documentation"
+    required: true
+
+  user_email:
+    description: "The user email having the right to commit in the docs repo. Default: github-service-account@orfium.com"
+    required: false
+    default: "github-service-account@orfium.com"
+
+  user_name:
+    description: "Default: orfium-orf"
+    required: false
+    default: "orfium-orf"
+runs:
+  using: "composite"
+  steps:
+    - name: Clone docs repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        repository: Orfium/docs
+        path: docs-repo
+        ssh-key: ${{ inputs.key }}
+
+    - name: Copy and commit docs
+      run: |
+        rm -rf ${{ inputs.docs_repo }}/${GITHUB_REPOSITORY#*/}
+        mkdir -p ${{ inputs.docs_repo }}/${GITHUB_REPOSITORY#*/}
+        cp -r docs/* ${{ inputs.docs_repo }}/${GITHUB_REPOSITORY#*/}/
+        cd ${{ inputs.docs_repo }}
+        git config --global user.email ${{ inputs.user_email }}
+        git config --global user.name ${{ inputs.user_name }}
+        git add .
+        git commit -m "Update ${GITHUB_REPOSITORY#*/} docs"
+        git push origin master
+      shell: bash
