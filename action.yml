@@ -31,10 +31,10 @@ runs:
 
     - name: Copy and commit docs
       run: |
-        rm -rf ${{ inputs.docs_repo }}/${GITHUB_REPOSITORY#*/}
-        mkdir -p ${{ inputs.docs_repo }}/${GITHUB_REPOSITORY#*/}
-        cp -r docs/* ${{ inputs.docs_repo }}/${GITHUB_REPOSITORY#*/}/
-        cd ${{ inputs.docs_repo }}
+        rm -rf $GITHUB_WORKSPACE/docs-repo/${GITHUB_REPOSITORY#*/}
+        mkdir -p $GITHUB_WORKSPACE/docs-repo/${GITHUB_REPOSITORY#*/}
+        cp -r docs/* $GITHUB_WORKSPACE/docs-repo/${GITHUB_REPOSITORY#*/}/
+        cd $GITHUB_WORKSPACE/docs-repo/
         git config --global user.email ${{ inputs.user_email }}
         git config --global user.name ${{ inputs.user_name }}
         git add .
