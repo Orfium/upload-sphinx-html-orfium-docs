@@ -29,6 +29,20 @@ runs:
         path: docs-repo
         ssh-key: ${{ inputs.deploy_key }}
 
+    - name: Clone heal repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        repository: 54shady/sphinx-to-github
+        path: sphinx-to-github
+        ssh-key: ${{ inputs.deploy_key }}
+
+    - name: Heal sphinx generated documentation
+      run: |
+        python $GITHUB_WORKSPACE/sphinx-to-github/sphinxtogithub/sphinxtogithub.py docs/html
+        rm -rf sphinx-to-github
+      shell: bash
+    
     - name: Copy and commit docs
       run: |
         rm -rf $GITHUB_WORKSPACE/docs-repo/${GITHUB_REPOSITORY#*/}
